@@ -15,7 +15,13 @@ const _dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(_dirname, "./config/config.env") });
 console.log(process.env.MONGO_URL);
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_URL],
+    methods: ["GET", "PUT", "DELETE", "POST"],
+    credentials: true,
+  })
+);
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "https://mediihelp.netlify.app/");
   res.header("Access-Control-Allow-Credentials", true);
